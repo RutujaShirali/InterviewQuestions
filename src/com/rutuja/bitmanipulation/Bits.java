@@ -23,7 +23,7 @@ public class Bits {
 		Bits bt = new Bits();
 		System.out.println(Integer.toBinaryString(a));
 		System.out.println(Integer.toBinaryString(b));
-		System.out.println(Integer.toBinaryString(bt.set(a, 1)));
+		System.out.println(Integer.toBinaryString(bt.test(a, 1)));
 	}
 
 }

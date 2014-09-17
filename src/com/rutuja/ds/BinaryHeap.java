@@ -6,10 +6,11 @@ public class BinaryHeap {
 	int size = 0;
 	int[] arr = new int[10];
 
-	public void push(int element) {
+	public int[] push(int element) {
 		arr[size] = element;
 		size++;
 		siftUp(size - 1);
+		return arr;
 	}
 
 	public boolean less(int a, int b) {

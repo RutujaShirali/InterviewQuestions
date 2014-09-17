@@ -20,7 +20,7 @@ public class RemoveDuplicates {
 					count++;
 				}
 			}
-			if (count < 1) //means noduplicate for that character so use it in the result;
+			if (count < 1) //means no duplicate for that character so use it in the result;
 				result += str.charAt(i);
 		}
 		return result;

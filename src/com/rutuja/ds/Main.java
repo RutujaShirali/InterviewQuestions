@@ -11,12 +11,14 @@ public class Main {
 		bh.push(50);
 		bh.push(5);
 		System.out.println(bh);
-		while (!bh.isEmpty())
-			System.out.println(bh.pop());
+		//while (!bh.isEmpty())
+		//	System.out.println(bh.pop());
 
 		PriorityQueue<Integer> pq = new PriorityQueue<>();
 		for (int i : new int[] { 10, 60, 50, 5 })
 			pq.add(i);
+		pq.add(4);
+		pq.remove();
 		while (!pq.isEmpty())
 			System.out.println(pq.poll());
 
