@@ -1,4 +1,9 @@
 package com.rutuja.adhoc;
+/**
+ * Finding the minimum in an array between the index i and j; preprocessing can take any amount of time but the 
+ * actual execution of query is O(1)
+ * 
+ */
 
 import java.util.Arrays;
 
@@ -20,7 +25,7 @@ public class MinRange {
 	}
 
 	private void preprocess(int[] arr) {
-		// Method2:
+		// Method2: 
 		method2 = new int[arr.length][arr.length];
 		for (int i = 0; i < arr.length; i++) {
 
@@ -31,7 +36,7 @@ public class MinRange {
 					method2[i][j] = Math.min(arr[j], method2[i][j - 1]);
 			}
 		}
-
+//Method3: takes O(sqrt n) time and O(sqrt n) space
 		sqrt = (int) Math.sqrt(arr.length);
 		method3 = new int[(int)Math.ceil(Math.sqrt(arr.length))];
 

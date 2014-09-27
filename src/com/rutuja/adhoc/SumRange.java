@@ -1,4 +1,8 @@
 package com.rutuja.adhoc;
+/**
+ * Finds the sum between the range i and j in an array
+ * 
+ */
 
 import java.util.Arrays;
 
