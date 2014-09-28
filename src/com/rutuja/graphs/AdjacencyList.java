@@ -11,28 +11,77 @@ public class AdjacencyList {
 
 	private int totalVertices;
 	private Edge[] head;
+	private boolean directed;
 
-	public AdjacencyList(int totalVertices) {
-		super();
-		this.totalVertices = totalVertices;
-		head = new Edge[totalVertices];
+	public int getTotalVertices() {
+		return totalVertices;
 	}
 
-	class Edge {
+	public void setTotalVertices(int totalVertices) {
+		this.totalVertices = totalVertices;
+	}
+
+	public AdjacencyList(int totalVertices, boolean directed) {
+		super();
+		this.totalVertices = totalVertices;
+		head = new Edge[this.totalVertices];
+	}
+
+	public class Edge {
 		private int u, v;
 		private Edge next;
+		private int weight;
+		
+		public int getU() {
+			return u;
+		}
 
-		public Edge(int u, int v, Edge next) {
+		public void setU(int u) {
+			this.u = u;
+		}
+
+		public int getV() {
+			return v;
+		}
+
+		public void setV(int v) {
+			this.v = v;
+		}
+
+		public Edge getNext() {
+			return next;
+		}
+
+		public void setNext(Edge next) {
+			this.next = next;
+		}
+
+		public int getWeight() {
+			return weight;
+		}
+
+		public void setWeight(int weight) {
+			this.weight = weight;
+		}
+
+		public Edge(int u, int v, Edge next, int weight) {
 			super();
 			this.u = u;
 			this.v = v;
 			this.next = next;
+			this.weight = weight;
 		}
+		
+
+	
 
 	}
 
-	public void addEdge(int u, int v) {
-		head[u] = new Edge(u, v, head[u]);
+	public void addEdge(int u, int v, int weight) {
+		head[u] = new Edge(u, v, head[u],weight);
+		if(!directed){
+			head[v] = new Edge(v,u,head[v],weight);
+		}
 	}
 
 	public boolean containsEdge(int u, int v) {
@@ -54,6 +103,8 @@ public class AdjacencyList {
 				sb.append(edge.u);
 				sb.append(",");
 				sb.append(edge.v);
+				sb.append(",");
+				sb.append(edge.weight);
 				sb.append(")->");
 			}
 			if (head[i] != null)
@@ -155,14 +206,14 @@ public class AdjacencyList {
 		Scanner scan = new Scanner(new File(
 				"C:\\Users\\Rutuja\\Desktop\\edges.txt"));
 		int vertices = scan.nextInt();
-		AdjacencyList al = new AdjacencyList(vertices);
+		AdjacencyList al = new AdjacencyList(vertices,true);
+		DijkstrasAlgo da = new DijkstrasAlgo();
 		while (scan.hasNext()) {
-			al.addEdge(scan.nextInt(), scan.nextInt());
+			al.addEdge(scan.nextInt(), scan.nextInt(), scan.nextInt());
 		}
+		scan.close();
 		System.out.println(al);
-		al.dfs(1);
-		System.out.println(al.isConnected(3, 0));
-		System.out.println(al.containsEdge(1, 3));
+		System.out.println(da.findDistance(1, 5, al));
 
 	}
 
