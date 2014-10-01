@@ -1,6 +1,7 @@
 package com.rutuja.graphs;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -12,6 +13,32 @@ public class AdjacencyList {
 	private int totalVertices;
 	private Edge[] head;
 	private boolean directed;
+	private int[] inDegree, outDegree;
+	private boolean[] used;
+
+	public boolean[] getUsed() {
+		return used;
+	}
+
+	public void setUsed(boolean[] used) {
+		this.used = used;
+	}
+
+	public int[] getOutDegree() {
+		return outDegree;
+	}
+
+	public void setOutDegree(int[] outDegree) {
+		this.outDegree = outDegree;
+	}
+
+	public int[] getInDegree() {
+		return Arrays.copyOf(inDegree, inDegree.length);
+	}
+
+	public void setInDegree(int[] inDegree) {
+		this.inDegree = inDegree;
+	}
 
 	public int getTotalVertices() {
 		return totalVertices;
@@ -25,13 +52,17 @@ public class AdjacencyList {
 		super();
 		this.totalVertices = totalVertices;
 		head = new Edge[this.totalVertices];
+		this.directed = directed;
+		inDegree = new int[totalVertices];
+		outDegree = new int[totalVertices];
+		used = new boolean[totalVertices];
 	}
 
-	public class Edge {
+	public class Edge implements Comparable<Edge> {
 		private int u, v;
 		private Edge next;
 		private int weight;
-		
+
 		public int getU() {
 			return u;
 		}
@@ -71,16 +102,30 @@ public class AdjacencyList {
 			this.next = next;
 			this.weight = weight;
 		}
-		
 
-	
+		@Override
+		public int compareTo(Edge other) {
+			if (this.weight > other.weight)
+				return 1;
+			else
+				return -1;
+		}
+
+		@Override
+		public String toString() {
+			return "Edge [u=" + u + ", v=" + v + ", weight=" + weight + "]";
+		}
 
 	}
 
 	public void addEdge(int u, int v, int weight) {
-		head[u] = new Edge(u, v, head[u],weight);
-		if(!directed){
-			head[v] = new Edge(v,u,head[v],weight);
+		head[u] = new Edge(u, v, head[u], weight);
+		inDegree[v] += 1;
+		outDegree[u] += 1;
+		used[u] = true;
+		used[v] = true;
+		if (!directed) {
+			head[v] = new Edge(v, u, head[v], weight);
 		}
 	}
 
@@ -173,16 +218,18 @@ public class AdjacencyList {
 		}
 
 	}
-	
-	public boolean isConnected(int u , int v){
-		if(containsEdge(u, v)) return true;
-		for(Edge edge : getEdges(u) ){
-			if(isConnected(edge.v,v)) return true;
+
+	public boolean isConnected(int u, int v) {
+		if (containsEdge(u, v))
+			return true;
+		for (Edge edge : getEdges(u)) {
+			if (isConnected(edge.v, v))
+				return true;
 		}
 		return false;
-		}
-	
-	public void dfs(int u){
+	}
+
+	public void dfs(int u) {
 		LinkedList<Integer> stack = new LinkedList<Integer>();
 		Set<Integer> visited = new HashSet<Integer>();
 		stack.push(u);
@@ -202,18 +249,46 @@ public class AdjacencyList {
 
 	}
 
+	public void topologicalSort(AdjacencyList al) {
+		int[] inDegree = al.getInDegree();
+		LinkedList<Integer> stack = new LinkedList<Integer>();
+		for (int i = 0; i < al.totalVertices; i++) {
+			if (al.used[i] && inDegree[i] == 0) {
+				stack.push(i);
+			}
+		}
+		while (!stack.isEmpty()) {
+			int u = stack.pop();
+			System.out.println(u);
+			Edge edge = head[u];
+			while (edge != null) {
+				inDegree[edge.v] -= 1;
+				if (inDegree[edge.v] == 0) {
+					stack.push(edge.v);
+				}
+				edge = edge.next;
+			}
+		}
+
+	}
+
 	public static void main(String[] args) throws Exception {
 		Scanner scan = new Scanner(new File(
 				"C:\\Users\\Rutuja\\Desktop\\edges.txt"));
 		int vertices = scan.nextInt();
-		AdjacencyList al = new AdjacencyList(vertices,true);
+		AdjacencyList al = new AdjacencyList(vertices, true);
 		DijkstrasAlgo da = new DijkstrasAlgo();
+		PrimsAlgo pa = new PrimsAlgo();
+		KruskalsAlgo ka = new KruskalsAlgo();
 		while (scan.hasNext()) {
 			al.addEdge(scan.nextInt(), scan.nextInt(), scan.nextInt());
 		}
 		scan.close();
 		System.out.println(al);
-		System.out.println(da.findDistance(1, 5, al));
+		al.topologicalSort(al);
+		// System.out.println(da.findDistance(1, 5, al));
+		// System.out.println(pa.prims(al));
+		// System.out.println(ka.kruskal(al));
 
 	}
 
