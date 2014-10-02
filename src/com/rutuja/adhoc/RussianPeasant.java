@@ -1,5 +1,12 @@
 package com.rutuja.adhoc;
 
+/**
+ * 
+ * Multiply 2 numbers without using the * operator. you can use addition and division 
+ * @author Rutuja
+ *
+ */
+
 public class RussianPeasant {
 
 	public int div2(int a) {

@@ -1,8 +1,11 @@
 package com.rutuja.adhoc;
+/**
+ * File Searcher which lists all the files in a directory(Also the files in a directory inside a directory
+ * 
+ */
 
 import java.io.File;
 import java.util.LinkedList;
-import java.util.List;
 
 public class FileSearcher {
 

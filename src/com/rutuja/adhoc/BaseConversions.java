@@ -1,5 +1,10 @@
 package com.rutuja.adhoc;
 
+/**
+ * Convert from decimal to base, base to decimal and from one base to another base.
+ * 
+ */
+
 import java.util.HashMap;
 import java.util.Map;
 

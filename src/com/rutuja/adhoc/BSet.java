@@ -1,4 +1,11 @@
 package com.rutuja.adhoc;
+/**
+ * 
+ * 
+ * @author Rutuja
+ * Implementation of bitset
+ *
+ */
 
 public class BSet {
 
