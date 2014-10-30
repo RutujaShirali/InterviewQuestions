@@ -45,7 +45,7 @@ public class DijkstrasAlgo {
 
 	public int findDistance2(int src, int des, AdjacencyList al) {
 		int[] dist = new int[al.getTotalVertices()];
-		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(
+		PriorityQueue<Integer> pq = new PriorityQueue<Integer>(10,
 				new DistanceComp(dist));
 		int[] parent = new int[al.getTotalVertices()];
 		Arrays.fill(parent, -1);
