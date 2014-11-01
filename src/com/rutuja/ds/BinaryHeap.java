@@ -14,7 +14,7 @@ public class BinaryHeap {
 	}
 
 	public boolean less(int a, int b) {
-		return (a < b); //a.compareTo(b) < 0 --> a < b
+		return (a < b); // a.compareTo(b) < 0 --> a < b
 	}
 
 	private void siftUp(int index) {
@@ -26,8 +26,15 @@ public class BinaryHeap {
 
 		}
 	}
-	
-	public boolean isEmpty(){
+
+	public void heapify(int[] arr) {
+		this.arr = arr;
+		this.size = arr.length;
+		for (int i = arr.length / 2; i >= 0; i--)
+			siftDown(i);
+	}
+
+	public boolean isEmpty() {
 		return size == 0;
 	}
 
@@ -58,6 +65,13 @@ public class BinaryHeap {
 	@Override
 	public String toString() {
 		return Arrays.toString(arr);
+	}
+	
+	public static void main(String[] args) {
+		int[] arr = new int[]{9, 8,7,6,5,4,3,2,1,0 };
+		BinaryHeap heap = new BinaryHeap();
+		heap.heapify(arr);
+		System.out.println(heap);
 	}
 
 }

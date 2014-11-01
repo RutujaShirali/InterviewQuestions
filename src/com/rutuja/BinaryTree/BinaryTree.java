@@ -1,6 +1,8 @@
 package com.rutuja.BinaryTree;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class BinaryTree {
 	Node root;
@@ -9,6 +11,7 @@ public class BinaryTree {
 		int data;
 		Node rightChild;
 		Node leftChild;
+		Node next;
 
 		public Node(int data, Node rightChild, Node leftChild) {
 			super();
@@ -220,10 +223,24 @@ public class BinaryTree {
 
 		tree.printLevelOrder();
 		tree.inOrder();
-		tree.preOrder();
-		tree.postOrder();
-		System.out.println(tree.countLeaf());
+		// tree.preOrder();
+		// tree.postOrder();
+		// System.out.println(tree.countLeaf());
+		// tree.printAncestor(8);
+		tree.TT();
+		tree.iterate();
 
+	}
+
+	public void iterate() {
+		Node node = root;
+		while (node.leftChild != null) {
+			node = node.leftChild;
+		}
+		while (node != null) {
+			System.out.print(node.data + " ");
+			node = node.next;
+		}
 	}
 
 	public void printLevelOrder() {
@@ -245,6 +262,46 @@ public class BinaryTree {
 			nextLevel = temp;
 		}
 
+	}
+
+	private Node TT(Node r, Node succ) {
+		if (r != null) {
+			if (r.rightChild != null)
+				succ = TT(r.rightChild, succ);
+			r.next = succ;
+			if (r.leftChild != null)
+				return TT(r.leftChild, r);
+		}
+		return r;
+	}
+
+	public Node TT() {
+		return TT(root, null);
+	}
+
+	public void printAncestor(int element) {
+		List<Integer> ancestors = new ArrayList<>();
+		if (findAncestor(root, element, ancestors))
+			System.out.println(ancestors);
+		else
+			System.out.println("Not found");
+	}
+
+	private boolean findAncestor(Node curr, int element, List<Integer> ancestors) {
+		if (curr == null)
+			return false;
+		if (curr.data == element) {
+			return true;
+		} else {
+			ancestors.add(curr.data);
+			if (findAncestor(curr.leftChild, element, ancestors)
+					|| findAncestor(curr.rightChild, element, ancestors))
+				return true;
+			else {
+				ancestors.remove(ancestors.size() - 1);
+				return false;
+			}
+		}
 	}
 
 	@Override
