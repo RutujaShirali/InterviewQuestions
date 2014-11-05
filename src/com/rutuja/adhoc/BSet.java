@@ -1,4 +1,7 @@
 package com.rutuja.adhoc;
+
+import java.util.Arrays;
+
 /**
  * 
  * 
@@ -17,6 +20,7 @@ public class BSet {
 		this.size = size;
 		arr = new int[(size + 1) / 32];
 	}
+	
 
 	public void set(int i) {
 		int div = i / 32, mod = i % 32;

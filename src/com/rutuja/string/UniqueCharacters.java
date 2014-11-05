@@ -11,7 +11,6 @@ public class UniqueCharacters {
 			if (check[str.charAt(i)])
 				return false;
 			check[str.charAt(i)] = true;
-			
 		}
 		return true;
 	}
