@@ -39,7 +39,7 @@ public class RemoveDuplicates {
 
 	public static void main(String[] args) {
 		RemoveDuplicates rd = new RemoveDuplicates();
-		System.out.print(rd.removeDuplicate2("RockstaR"));
+		System.out.print(rd.removeDuplicate2("Rockstar"));
 
 	}
 
